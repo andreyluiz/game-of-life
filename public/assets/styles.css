@@ -1,0 +1,25 @@
+.App__world___3h_nj {
+  display: flex;
+  flex-direction: column;
+}
+
+.App__row___1ORTf {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  height: 20px;
+}
+
+.App__column___fNZ1k {
+  flex: 0 0 20px;
+}
+
+.App__alive___2OJcG {
+  background-color: black;
+  border: 1px solid white;
+}
+
+.App__dead___2IqwR {
+  background-color: white;
+  border: 1px solid black;
+}

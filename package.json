@@ -8,7 +8,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --hot"
+    "start": "webpack-dev-server --hot",
+    "build": "cross-env NODE_ENV=\"production\" webpack"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -17,18 +18,20 @@
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "cross-env": "^4.0.0",
+    "css-loader": "^0.28.0",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "style-loader": "^0.16.1",
     "webpack": "^2.4.1",
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
-    "css-loader": "^0.28.0",
     "lodash": "^4.17.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.4",
     "redux": "^3.6.0",
     "redux-duck": "^1.0.2",
-    "redux-thunk": "^2.2.0",
-    "style-loader": "^0.16.1"
+    "redux-thunk": "^2.2.0"
   }
 }

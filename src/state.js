@@ -1,6 +1,7 @@
 import { createDuck } from 'redux-duck';
 import { process } from './processing';
-import { map, clone } from 'lodash'
+import map from 'lodash/map';
+import clone from 'lodash/clone';
 
 const duck = createDuck('simulator', 'game-of-life');
 
