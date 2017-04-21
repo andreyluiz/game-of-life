@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { process } from './processing';
-import { startSimulation, stopSimulation, toggleCell, updateWorldSize } from './state';
+import { startSimulation, stopSimulation, toggleCell, updateWorldSize, updateSpeed } from './state';
 import styles from './App.css';
 
 class App extends Component {
@@ -36,6 +36,7 @@ class App extends Component {
         <div>
           <label htmlFor="rows">Rows:</label>
           <input
+            name="rows"
             type="number"
             value={this.props.rows}
             onChange={(e) => {
@@ -49,6 +50,7 @@ class App extends Component {
         <div>
           <label htmlFor="columns">Columns:</label>
           <input
+            name="columns"
             type="number"
             value={this.props.columns}
             onChange={(e) => {
@@ -59,16 +61,30 @@ class App extends Component {
             }}
           />
         </div>
+        <div>
+          <label htmlFor="speed">Simulation speed:</label>
+          <input
+            name="speed"
+            type="range"
+            value={this.props.speed}
+            onChange={(e) => {
+              this.props.updateSpeed(e.target.value);
+            }}
+            min="1"
+            max="1001"
+          />
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ simulation: { world, step, rows, columns }}) => ({
+const mapStateToProps = ({ simulation: { world, step, rows, columns, speed }}) => ({
   world,
   step,
   rows,
   columns,
+  speed,
 })
 
-export default connect(mapStateToProps, { startSimulation, stopSimulation, toggleCell, updateWorldSize })(App)
+export default connect(mapStateToProps, { startSimulation, stopSimulation, toggleCell, updateWorldSize, updateSpeed })(App)

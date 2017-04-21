@@ -9,15 +9,23 @@ const SIMULATION_STOP = duck.defineType('SIMULATION_STOP');
 const SIMULATION_STEP = duck.defineType('SIMULATION_STEP');
 const TOGGLE_CELL = duck.defineType('TOGGLE_CELL');
 const UPDATE_WORLD_SIZE = duck.defineType('UPDATE_WORLD_SIZE')
+const UPDATE_SPEED = duck.defineType('UPDATE_SPEED');
 
-const step = duck.createAction(SIMULATION_STEP);
+const step = () =>
+  (dispatch, getState) => {
+    dispatch({ type: SIMULATION_STEP });
+    const { speed } = getState().simulation;
+    clearInterval(timer);
+    timer = setInterval(() => dispatch(step()), (1000 - speed));
+  }
 
 let timer = null;
 
 export const startSimulation = () =>
-  dispatch => {
+  (dispatch, getState) => {
+    const { speed } = getState().simulation;
     clearInterval(timer);
-    timer = setInterval(() => dispatch(step()), 500);
+    timer = setInterval(() => dispatch(step()), (1000 - speed));
     dispatch({ type: SIMULATION_START });
     dispatch(step());
   }
@@ -31,11 +39,14 @@ export const toggleCell = duck.createAction(TOGGLE_CELL);
 
 export const updateWorldSize = duck.createAction(UPDATE_WORLD_SIZE);
 
+export const updateSpeed = duck.createAction(UPDATE_SPEED)
+
 const initialState = {
   started: false,
   step: 0,
   rows: 0,
   columns: 0,
+  speed: 500,
   world: [],
 };
 
@@ -71,5 +82,9 @@ export const reducer = duck.createReducer({
     rows,
     columns,
     world: new Array(rows).fill(new Array(columns).fill(0)),
+  }),
+  [UPDATE_SPEED]: (state, { payload }) => ({
+    ...state,
+    speed: payload,
   }),
 }, initialState);
