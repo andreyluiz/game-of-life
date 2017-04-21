@@ -1,60 +1,45 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { process } from './processing';
+import { startSimulation, stopSimulation, aliveCell } from './state';
 import styles from './App.css';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      timer: null,
-      step: 0,
-      world:
-        [ [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0],
-          [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1],
-          [0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0],
-          [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0] ],
-    };
-  }
-
+class App extends Component {
   componentDidMount() {
-    const timer = setInterval(this.tick.bind(this), 500);
-    this.setState({ timer });
+    // this.props.startSimulation();
   }
 
   componentWillUnmount() {
-    this.clearInterval(this.state.timer);
-  }
-
-  tick() {
-    const { step, world } = this.state;
-    this.setState({
-      step: step + 1,
-      world: process(world),
-    });
+    this.props.stopSimulation();
   }
 
   render() {
-    const { world } = this.state;
+    const { world } = this.props;
     return (
       <div>
         <div className={styles.world}>
           {world.map((row, rowIndex) => (
             <div key={rowIndex} className={styles.row}>
               {row.map((column, colIndex) => (
-                <div key={rowIndex + colIndex} className={column === 1 ? styles.alive : styles.dead}></div>
+                <div
+                  key={colIndex}
+                  className={column === 1 ? styles.alive : styles.dead}
+                  onClick={() => { this.props.aliveCell({ row: rowIndex, column: colIndex }); }}
+                />
               ))}
             </div>
           ))}
         </div>
+        <button onClick={() => { this.props.stopSimulation() }}>Stop simulation</button>
+        <button onClick={() => { this.props.startSimulation() }}>Start simulation</button>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  world: state.simulation.world,
+  step: state.simulation.world,
+})
+
+export default connect(mapStateToProps, { startSimulation, stopSimulation, aliveCell })(App)
