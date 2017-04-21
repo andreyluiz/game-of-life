@@ -1,13 +1,14 @@
 import { createDuck } from 'redux-duck';
 import { process } from './processing';
-import clone from 'lodash/clone'
+import { map, clone } from 'lodash'
 
 const duck = createDuck('simulator', 'game-of-life');
 
 const SIMULATION_START = duck.defineType('SIMULATION_START');
 const SIMULATION_STOP = duck.defineType('SIMULATION_STOP');
 const SIMULATION_STEP = duck.defineType('SIMULATION_STEP');
-const ALIVE_CELL = duck.defineType('ALIVE_CELL');
+const TOGGLE_CELL = duck.defineType('TOGGLE_CELL');
+const UPDATE_WORLD_SIZE = duck.defineType('UPDATE_WORLD_SIZE')
 
 const step = duck.createAction(SIMULATION_STEP);
 
@@ -26,24 +27,16 @@ export const stopSimulation = () => {
   return { type: SIMULATION_STOP };
 }
 
-export const aliveCell = duck.createAction(ALIVE_CELL);
+export const toggleCell = duck.createAction(TOGGLE_CELL);
+
+export const updateWorldSize = duck.createAction(UPDATE_WORLD_SIZE);
 
 const initialState = {
   started: false,
   step: 0,
-  world:
-    [ [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ],
+  rows: 0,
+  columns: 0,
+  world: [],
 };
 
 export const reducer = duck.createReducer({
@@ -60,12 +53,23 @@ export const reducer = duck.createReducer({
     step: state.step + 1,
     world: process(state.world),
   }),
-  [ALIVE_CELL]: (state, { payload: { row, column } }) => {
-    const newWorld = clone(state.world);
-    newWorld[row][column] = 1;
+  [TOGGLE_CELL]: (state, { payload: { row, column } }) => {
+    const currentValue = state.world[row][column];
+    const newWorld = map(state.world, clone);
+    let newValue = 0;
+    if (currentValue === 0) {
+      newValue = 1;
+    }
+    newWorld[row].splice(column, 1, newValue);
     return {
       ...state,
       world: newWorld,
     };
   },
+  [UPDATE_WORLD_SIZE]: (state, { payload: { rows, columns }}) => ({
+    ...state,
+    rows,
+    columns,
+    world: new Array(rows).fill(new Array(columns).fill(0)),
+  }),
 }, initialState);
