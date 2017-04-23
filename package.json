@@ -9,10 +9,12 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --hot",
-    "build": "cross-env NODE_ENV=\"production\" webpack"
+    "build": "cross-env NODE_ENV=\"production\" webpack",
+    "lint": "eslint src"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
     "babel-loader": "^6.4.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
@@ -20,6 +22,12 @@
     "babel-preset-react": "^6.24.1",
     "cross-env": "^4.0.0",
     "css-loader": "^0.28.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-flowtype": "^2.32.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
     "extract-text-webpack-plugin": "^2.1.0",
     "style-loader": "^0.16.1",
     "webpack": "^2.4.1",
