@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { process } from './processing';
 import { startSimulation, stopSimulation, toggleCell, updateWorldSize, updateSpeed } from './state';
-import styles from './App.css';
+import WorldView from './WorldView';
 
 class App extends Component {
   componentDidMount() {
@@ -18,19 +18,7 @@ class App extends Component {
     const { world } = this.props;
     return (
       <div>
-        <div className={styles.world}>
-          {world.map((row, rowIndex) => (
-            <div key={rowIndex} className={styles.row}>
-              {row.map((column, colIndex) => (
-                <div
-                  key={colIndex}
-                  className={column === 1 ? styles.alive : styles.dead}
-                  onClick={() => { this.props.toggleCell({ row: rowIndex, column: colIndex }); }}
-                />
-              ))}
-            </div>
-          ))}
-        </div>
+        <WorldView />
         <button onClick={() => { this.props.stopSimulation() }}>Stop simulation</button>
         <button onClick={() => { this.props.startSimulation() }}>Start simulation</button>
         <div>
@@ -79,8 +67,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ simulation: { world, step, rows, columns, speed }}) => ({
-  world,
+const mapStateToProps = ({ simulation: { step, rows, columns, speed }}) => ({
   step,
   rows,
   columns,
