@@ -14,17 +14,8 @@ const middlewares = applyMiddleware(thunk);
 
 const store = createStore(rootReducer, middlewares);
 
-// @flow weak
-type Props = {
-  store: Object,
-}
-
-const App = ({
-  store,
-}: Props) => (
+export default () => (
   <Provider store={store}>
     <Simulator />
   </Provider>
 );
-
-export default <App store={store} />;

@@ -2,6 +2,7 @@
 /* eslint react/no-array-index-key: 0 */
 import React from 'react';
 import { connect } from 'react-redux';
+import { toggleCell } from './state';
 import styles from './WorldView.css';
 
 // @flow weak
@@ -33,4 +34,4 @@ const mapStateToProps = state => ({
   world: state.simulation.world,
 });
 
-export default connect(mapStateToProps, null)(WorldView);
+export default connect(mapStateToProps, { toggleCell })(WorldView);
