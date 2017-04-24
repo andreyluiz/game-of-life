@@ -1,14 +1,18 @@
-const ALIVE = 1;
-const DEAD = 0;
-
+// @flow
 class World {
-  constructor(source) {
+  source: Array<Object>
+  row: number
+  column: number
+  static ALIVE: number
+  static DEAD: number
+
+  constructor(source: Array<Object>) {
     this.source = source;
     this.row = 0;
     this.column = 0;
   }
 
-  setCell(row, column) {
+  setCell(row: number, column: number) {
     this.row = row;
     this.column = column;
   }
@@ -18,7 +22,7 @@ class World {
   }
 
   getTopLeft() {
-    if (this.source[this.row - 1] && this.source[this.row - 1][this.column -1]) {
+    if (this.source[this.row - 1] && this.source[this.row - 1][this.column - 1]) {
       return this.source[this.row - 1][this.column - 1];
     }
     return 0;

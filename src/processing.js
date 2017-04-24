@@ -1,6 +1,7 @@
+// @flow
 const World = require('./world');
 
-export const process = (input) => {
+export default (input: Array<Object>) => {
   const output = [];
 
   const world = new World(input);
@@ -9,10 +10,9 @@ export const process = (input) => {
     const rowArray = [];
 
     for (let column = 0; column < input[row].length; column += 1) {
-
       world.setCell(row, column);
 
-      if (world.isCellAlive() && 
+      if (world.isCellAlive() &&
          (world.getNeighborsCount() === 2 || world.getNeighborsCount() === 3)) {
         rowArray.push(World.ALIVE);
       } else if (!world.isCellAlive() && world.getNeighborsCount() === 3) {
@@ -26,4 +26,4 @@ export const process = (input) => {
   }
 
   return output;
-}
+};

@@ -19,6 +19,7 @@
   "rules": {
     "no-const-assign": "error",
     "no-this-before-super": "error",
+    "no-shadow": "off",
     "no-undef": "error",
     "no-unreachable": "error",
     "no-unused-vars": "error",

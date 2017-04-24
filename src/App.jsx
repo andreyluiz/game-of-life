@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
@@ -13,9 +14,14 @@ const middlewares = applyMiddleware(thunk);
 
 const store = createStore(rootReducer, middlewares);
 
+// @flow weak
+type Props = {
+  store: Object,
+}
+
 const App = ({
   store,
-}) => (
+}: Props) => (
   <Provider store={store}>
     <Simulator />
   </Provider>

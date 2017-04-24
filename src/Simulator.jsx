@@ -1,12 +1,11 @@
+// @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { process } from './processing';
 import { startSimulation, stopSimulation, toggleCell, updateWorldSize, updateSpeed } from './state';
 import WorldView from './WorldView';
 
 class App extends Component {
   componentDidMount() {
-    // this.props.startSimulation();
     this.props.updateWorldSize({ rows: 20, columns: 20 });
   }
 
@@ -14,23 +13,45 @@ class App extends Component {
     this.props.stopSimulation();
   }
 
+  // @flow weak
+  props: {
+    updateWorldSize: Function,
+    stopSimulation: Function,
+    startSimulation: Function,
+    updateWorldSize: Function,
+    updateSpeed: Function,
+    step: Number,
+    rows: Number,
+    columns: Number,
+    speed: Number,
+  }
+
   render() {
-    const { world } = this.props;
+    const {
+      stopSimulation,
+      startSimulation,
+      updateWorldSize,
+      updateSpeed,
+      step,
+      rows,
+      columns,
+      speed,
+    } = this.props;
     return (
       <div>
         <WorldView />
-        <button onClick={() => { this.props.stopSimulation() }}>Stop simulation</button>
-        <button onClick={() => { this.props.startSimulation() }}>Start simulation</button>
+        <button onClick={stopSimulation}>Stop simulation</button>
+        <button onClick={startSimulation}>Start simulation</button>
         <div>
           <label htmlFor="rows">Rows:</label>
           <input
             name="rows"
             type="number"
-            value={this.props.rows}
+            value={rows}
             onChange={(e) => {
-              this.props.updateWorldSize({
-                rows: parseInt(e.target.value),
-                columns: this.props.columns,
+              updateWorldSize({
+                rows: parseInt(e.target.value, 10),
+                columns,
               });
             }}
           />
@@ -40,11 +61,11 @@ class App extends Component {
           <input
             name="columns"
             type="number"
-            value={this.props.columns}
+            value={columns}
             onChange={(e) => {
-              this.props.updateWorldSize({
-                rows: this.props.rows,
-                columns: parseInt(e.target.value),
+              updateWorldSize({
+                rows,
+                columns: parseInt(e.target.value, 10),
               });
             }}
           />
@@ -54,24 +75,30 @@ class App extends Component {
           <input
             name="speed"
             type="range"
-            value={this.props.speed}
+            value={speed}
             onChange={(e) => {
-              this.props.updateSpeed(e.target.value);
+              updateSpeed(e.target.value);
             }}
             min="1"
             max="1001"
           />
+        </div>
+        <div>
+          <span>{step}</span>
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ simulation: { step, rows, columns, speed }}) => ({
+const mapStateToProps = ({ simulation: { step, rows, columns, speed } }) => ({
   step,
   rows,
   columns,
   speed,
-})
+});
 
-export default connect(mapStateToProps, { startSimulation, stopSimulation, toggleCell, updateWorldSize, updateSpeed })(App)
+export default connect(
+  mapStateToProps,
+  { startSimulation, stopSimulation, toggleCell, updateWorldSize, updateSpeed },
+)(App);

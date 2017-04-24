@@ -1,7 +1,8 @@
+// @flow
 import { createDuck } from 'redux-duck';
-import { process } from './processing';
 import map from 'lodash/map';
 import clone from 'lodash/clone';
+import process from './processing';
 
 const duck = createDuck('simulator', 'game-of-life');
 
@@ -9,8 +10,10 @@ const SIMULATION_START = duck.defineType('SIMULATION_START');
 const SIMULATION_STOP = duck.defineType('SIMULATION_STOP');
 const SIMULATION_STEP = duck.defineType('SIMULATION_STEP');
 const TOGGLE_CELL = duck.defineType('TOGGLE_CELL');
-const UPDATE_WORLD_SIZE = duck.defineType('UPDATE_WORLD_SIZE')
+const UPDATE_WORLD_SIZE = duck.defineType('UPDATE_WORLD_SIZE');
 const UPDATE_SPEED = duck.defineType('UPDATE_SPEED');
+
+let timer: number = 0;
 
 const step = () =>
   (dispatch, getState) => {
@@ -18,29 +21,27 @@ const step = () =>
     const { speed } = getState().simulation;
     clearInterval(timer);
     timer = setInterval(() => dispatch(step()), (1000 - speed));
-  }
-
-let timer = null;
+  };
 
 export const startSimulation = () =>
-  (dispatch, getState) => {
+  (dispatch: Function, getState: Function) => {
     const { speed } = getState().simulation;
     clearInterval(timer);
     timer = setInterval(() => dispatch(step()), (1000 - speed));
     dispatch({ type: SIMULATION_START });
     dispatch(step());
-  }
+  };
 
 export const stopSimulation = () => {
   clearInterval(timer);
   return { type: SIMULATION_STOP };
-}
+};
 
 export const toggleCell = duck.createAction(TOGGLE_CELL);
 
 export const updateWorldSize = duck.createAction(UPDATE_WORLD_SIZE);
 
-export const updateSpeed = duck.createAction(UPDATE_SPEED)
+export const updateSpeed = duck.createAction(UPDATE_SPEED);
 
 const initialState = {
   started: false,
@@ -78,7 +79,7 @@ export const reducer = duck.createReducer({
       world: newWorld,
     };
   },
-  [UPDATE_WORLD_SIZE]: (state, { payload: { rows, columns }}) => ({
+  [UPDATE_WORLD_SIZE]: (state, { payload: { rows, columns } }) => ({
     ...state,
     rows,
     columns,
