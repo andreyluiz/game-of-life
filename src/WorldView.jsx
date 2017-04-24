@@ -23,7 +23,9 @@ const WorldView = ({
             key={colIndex}
             className={column === 1 ? styles.alive : styles.dead}
             onClick={() => { toggleCell({ row: rowIndex, column: colIndex }); }}
-          />
+          >
+            <div className={column === 1 ? styles.innerAlive : styles.innerDead} />
+          </button>
         ))}
       </div>
     ))}

@@ -1,6 +1,7 @@
 .world {
   display: flex;
   flex-direction: column;
+  margin-top: 12px;
 }
 
 .row {
@@ -12,16 +13,29 @@
 
 .column {
   flex: 0 0 20px;
+  border: 1px solid black;
+  position: relative;
 }
 
-.alive {
-  composes: column;
-  background-color: black;
-  border: 1px solid white;
-}
-
-.dead {
+.alive, .dead {
   composes: column;
   background-color: white;
-  border: 1px solid black;
+}
+
+.innerDiv {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 16px;
+  height: 16px;
+}
+
+.innerAlive {
+  composes: innerDiv;
+  background-color: black;
+}
+
+.innerDead {
+  composes: innerDiv;
+  background-color: transparent;
 }

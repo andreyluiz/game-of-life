@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { startSimulation, stopSimulation, toggleCell, updateWorldSize, updateSpeed } from './state';
+import styles from './Controls.css';
 
 class Control extends Component {
   componentDidMount() {
@@ -38,55 +39,70 @@ class Control extends Component {
       started,
     } = this.props;
     return (
-      <div>
-        <button
-          onClick={started ? stopSimulation : startSimulation}
-        >
-          {started ? 'Stop' : 'Start'}
-        </button>
-        <div>
-          <label htmlFor="rows">Rows:</label>
-          <input
-            name="rows"
-            type="number"
-            value={rows}
-            onChange={(e) => {
-              updateWorldSize({
-                rows: parseInt(e.target.value, 10),
-                columns,
-              });
-            }}
-          />
+      <div className={styles.controls}>
+        <div className={styles.firstColumn}>
+          <div className={styles.row}>
+            <button
+              onClick={started ? stopSimulation : startSimulation}
+              className={started ? styles.stopButton : styles.startButton}
+            >
+              {started ? 'Stop' : 'Start'}
+            </button>
+          </div>
+          <div className={styles.row}>
+            <div className={styles.step}>
+              <span>Step {step}</span>
+            </div>
+          </div>
         </div>
-        <div>
-          <label htmlFor="columns">Columns:</label>
-          <input
-            name="columns"
-            type="number"
-            value={columns}
-            onChange={(e) => {
-              updateWorldSize({
-                rows,
-                columns: parseInt(e.target.value, 10),
-              });
-            }}
-          />
-        </div>
-        <div>
-          <label htmlFor="speed">Simulation speed:</label>
-          <input
-            name="speed"
-            type="range"
-            value={speed}
-            onChange={(e) => {
-              updateSpeed(e.target.value);
-            }}
-            min="1"
-            max="1001"
-          />
-        </div>
-        <div>
-          <span>{step}</span>
+        <div className={styles.secondColumn}>
+          <div className={styles.row}>
+            <div className={styles.inputGroup}>
+              <label className={styles.inputLabel} htmlFor="rows">Rows:</label>
+              <input
+                name="rows"
+                type="number"
+                value={rows}
+                onChange={(e) => {
+                  updateWorldSize({
+                    rows: parseInt(e.target.value, 10),
+                    columns,
+                  });
+                }}
+              />
+            </div>
+          </div>
+          <div className={styles.row}>
+            <div className={styles.inputGroup}>
+              <label className={styles.inputLabel} htmlFor="columns">Columns:</label>
+              <input
+                name="columns"
+                type="number"
+                value={columns}
+                onChange={(e) => {
+                  updateWorldSize({
+                    rows,
+                    columns: parseInt(e.target.value, 10),
+                  });
+                }}
+              />
+            </div>
+          </div>
+          <div className={styles.row}>
+            <div className={styles.inputGroup}>
+              <label className={styles.inputLabel} htmlFor="speed">Speed:</label>
+              <input
+                name="speed"
+                type="range"
+                value={speed}
+                onChange={(e) => {
+                  updateSpeed(e.target.value);
+                }}
+                min="1"
+                max="1001"
+              />
+            </div>
+          </div>
         </div>
       </div>
     );

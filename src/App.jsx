@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { reducer as simulation } from './state';
 import Simulator from './Simulator';
+import './App.css';
 
 const rootReducer = combineReducers({
   simulation,

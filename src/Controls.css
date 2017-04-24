@@ -1,0 +1,93 @@
+.controls {
+  display: flex;
+  max-width: 400px;
+  flex-direction: row;
+  padding: 12px;
+  border: 1px solid black;
+}
+
+.firstColumn {
+  flex: 0 0 80px;
+  display: flex;
+  flex-direction: column;
+}
+
+.secondColumn {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  flex: 1 1 auto;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.inputGroup {
+  display: flex;
+  padding-left: 12px;
+  margin-top: 6px;
+  flex: 1 1 auto;
+  display: flex;
+}
+
+.inputGroup input {
+  flex: 1 1 auto;
+  border: 1px solid black;
+  height: 24px;
+  margin: 0;
+}
+
+.inputGroup input[type="number"] {
+  padding-left: 4px;
+  font-size: 14px;
+}
+
+.inputGroup input[type="range" i] {
+  color: black;
+  -webkit-appearance: none;
+  border: 1px solid black;
+}
+
+.inputLabel {
+  flex: 0 0 80px;
+}
+
+.step {
+  flex: 1 1 auto;
+  padding-top: 3px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+.playButton {
+  flex: 1 1 auto;
+  width: 100%;
+  outline: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.startButton {
+  composes: playButton;
+  color: black;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.stopButton {
+  composes: playButton;
+  color: white;
+  background-color: black;
+  border: 1px solid white;
+}
+
+.startButton:hover {
+  background-color: rgba(0, 0, 0, 0.13);
+}
+
+.stopButton:hover {
+  background-color: rgba(0, 0, 0, 0.87);
+}
