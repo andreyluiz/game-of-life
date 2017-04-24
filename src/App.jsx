@@ -1,77 +1,24 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { process } from './processing';
-import { startSimulation, stopSimulation, toggleCell, updateWorldSize, updateSpeed } from './state';
-import WorldView from './WorldView';
+import React from 'react';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
+import { reducer as simulation } from './state';
+import Simulator from './Simulator';
 
-class App extends Component {
-  componentDidMount() {
-    // this.props.startSimulation();
-    this.props.updateWorldSize({ rows: 20, columns: 20 });
-  }
+const rootReducer = combineReducers({
+  simulation,
+});
 
-  componentWillUnmount() {
-    this.props.stopSimulation();
-  }
+const middlewares = applyMiddleware(thunk);
 
-  render() {
-    const { world } = this.props;
-    return (
-      <div>
-        <WorldView />
-        <button onClick={() => { this.props.stopSimulation() }}>Stop simulation</button>
-        <button onClick={() => { this.props.startSimulation() }}>Start simulation</button>
-        <div>
-          <label htmlFor="rows">Rows:</label>
-          <input
-            name="rows"
-            type="number"
-            value={this.props.rows}
-            onChange={(e) => {
-              this.props.updateWorldSize({
-                rows: parseInt(e.target.value),
-                columns: this.props.columns,
-              });
-            }}
-          />
-        </div>
-        <div>
-          <label htmlFor="columns">Columns:</label>
-          <input
-            name="columns"
-            type="number"
-            value={this.props.columns}
-            onChange={(e) => {
-              this.props.updateWorldSize({
-                rows: this.props.rows,
-                columns: parseInt(e.target.value),
-              });
-            }}
-          />
-        </div>
-        <div>
-          <label htmlFor="speed">Simulation speed:</label>
-          <input
-            name="speed"
-            type="range"
-            value={this.props.speed}
-            onChange={(e) => {
-              this.props.updateSpeed(e.target.value);
-            }}
-            min="1"
-            max="1001"
-          />
-        </div>
-      </div>
-    );
-  }
-}
+const store = createStore(rootReducer, middlewares);
 
-const mapStateToProps = ({ simulation: { step, rows, columns, speed }}) => ({
-  step,
-  rows,
-  columns,
-  speed,
-})
+const App = ({
+  store,
+}) => (
+  <Provider store={store}>
+    <Simulator />
+  </Provider>
+);
 
-export default connect(mapStateToProps, { startSimulation, stopSimulation, toggleCell, updateWorldSize, updateSpeed })(App)
+export default <App store={store} />;

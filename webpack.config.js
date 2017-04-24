@@ -9,6 +9,9 @@ const config = {
     filename: 'app.bundle.js',
     publicPath: '/assets/'
   },
+  resolve: {
+    extensions: ['.js', '.jsx', '.css'],
+  },
   module: {
     rules: [
       {
