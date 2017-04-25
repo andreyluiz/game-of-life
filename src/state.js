@@ -4,6 +4,9 @@ import map from 'lodash/map';
 import clone from 'lodash/clone';
 import process from './processing';
 
+const ALIVE = 1;
+const DEAD = 0;
+
 const duck = createDuck('simulator', 'game-of-life');
 
 const SIMULATION_START = duck.defineType('SIMULATION_START');
@@ -53,6 +56,18 @@ const initialState = {
   columns: 0,
   speed: 500,
   world: [],
+  rules: [
+    {
+      is: ALIVE,
+      has: [2, 3],
+      becomes: ALIVE,
+    },
+    {
+      is: DEAD,
+      has: [3],
+      becomes: ALIVE,
+    },
+  ],
 };
 
 export const reducer = duck.createReducer({
@@ -71,7 +86,7 @@ export const reducer = duck.createReducer({
   [SIMULATION_STEP]: state => ({
     ...state,
     step: state.step + 1,
-    world: process(state.world),
+    world: process(state.world, state.rules),
   }),
   [TOGGLE_CELL]: (state, { payload: { row, column } }) => {
     const currentValue = state.world[row][column];

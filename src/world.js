@@ -17,8 +17,12 @@ class World {
     this.column = column;
   }
 
+  getCellStatus() {
+    return this.source[this.row][this.column];
+  }
+
   isCellAlive() {
-    return this.source[this.row][this.column] === World.ALIVE;
+    return this.getCellStatus() === World.ALIVE;
   }
 
   getTopLeft() {

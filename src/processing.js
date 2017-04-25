@@ -1,7 +1,14 @@
 // @flow
 const World = require('./world');
+const isEmpty = require('lodash/isEmpty');
 
-export default (input: Array<Object>) => {
+type Rule = {
+  is: number,
+  has: Array<number>,
+  becomes: number,
+};
+
+export default (input: Array<Object>, rules: Array<Rule>) => {
   const output = [];
 
   const world = new World(input);
@@ -12,13 +19,15 @@ export default (input: Array<Object>) => {
     for (let column = 0; column < input[row].length; column += 1) {
       world.setCell(row, column);
 
-      if (world.isCellAlive() &&
-         (world.getNeighborsCount() === 2 || world.getNeighborsCount() === 3)) {
-        rowArray.push(World.ALIVE);
-      } else if (!world.isCellAlive() && world.getNeighborsCount() === 3) {
-        rowArray.push(World.ALIVE);
+      const status = world.getCellStatus();
+      const neighbors = world.getNeighborsCount();
+      const matchedRule = rules.find(rule =>
+        (rule.is === status && rule.has.includes(neighbors)));
+
+      if (!matchedRule || isEmpty(matchedRule)) {
+        rowArray.push(0);
       } else {
-        rowArray.push(World.DEAD);
+        rowArray.push(matchedRule.becomes);
       }
     }
 
