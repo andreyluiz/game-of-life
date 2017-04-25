@@ -1,7 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { startSimulation, stopSimulation, toggleCell, updateWorldSize, updateSpeed } from './state';
+import { startSimulation, stopSimulation, clearSimulation, toggleCell, updateWorldSize, updateSpeed } from './state';
 import styles from './Controls.css';
 
 class Control extends Component {
@@ -17,6 +17,7 @@ class Control extends Component {
     updateWorldSize: Function,
     stopSimulation: Function,
     startSimulation: Function,
+    clearSimulation: Function,
     updateWorldSize: Function,
     updateSpeed: Function,
     step: number,
@@ -30,6 +31,7 @@ class Control extends Component {
     const {
       startSimulation,
       stopSimulation,
+      clearSimulation,
       updateWorldSize,
       updateSpeed,
       step,
@@ -47,6 +49,14 @@ class Control extends Component {
               className={started ? styles.stopButton : styles.startButton}
             >
               {started ? 'Stop' : 'Start'}
+            </button>
+          </div>
+          <div className={styles.row}>
+            <button
+              onClick={clearSimulation}
+              className={styles.clearButton}
+            >
+              Reset
             </button>
           </div>
           <div className={styles.row}>
@@ -115,5 +125,5 @@ const mapStateToProps = ({ simulation: { step, rows, columns, speed, started } }
 
 export default connect(
   mapStateToProps,
-  { startSimulation, stopSimulation, toggleCell, updateWorldSize, updateSpeed },
+  { startSimulation, stopSimulation, clearSimulation, toggleCell, updateWorldSize, updateSpeed },
 )(Control);

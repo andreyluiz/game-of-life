@@ -8,6 +8,7 @@ const duck = createDuck('simulator', 'game-of-life');
 
 const SIMULATION_START = duck.defineType('SIMULATION_START');
 const SIMULATION_STOP = duck.defineType('SIMULATION_STOP');
+const SIMULATION_CLEAR = duck.defineType('SIMULATION_CLEAR');
 const SIMULATION_STEP = duck.defineType('SIMULATION_STEP');
 const TOGGLE_CELL = duck.defineType('TOGGLE_CELL');
 const UPDATE_WORLD_SIZE = duck.defineType('UPDATE_WORLD_SIZE');
@@ -37,6 +38,8 @@ export const stopSimulation = () => {
   return { type: SIMULATION_STOP };
 };
 
+export const clearSimulation = duck.createAction(SIMULATION_CLEAR);
+
 export const toggleCell = duck.createAction(TOGGLE_CELL);
 
 export const updateWorldSize = duck.createAction(UPDATE_WORLD_SIZE);
@@ -60,6 +63,10 @@ export const reducer = duck.createReducer({
   [SIMULATION_STOP]: state => ({
     ...state,
     started: false,
+  }),
+  [SIMULATION_CLEAR]: state => ({
+    ...state,
+    world: new Array(state.rows).fill(new Array(state.columns).fill(0)),
   }),
   [SIMULATION_STEP]: state => ({
     ...state,

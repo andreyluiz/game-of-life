@@ -62,7 +62,7 @@
   text-align: center;
 }
 
-.playButton {
+.button {
   flex: 1 1 auto;
   width: 100%;
   outline: none;
@@ -71,14 +71,14 @@
 }
 
 .startButton {
-  composes: playButton;
+  composes: button;
   color: black;
   background-color: white;
   border: 1px solid black;
 }
 
 .stopButton {
-  composes: playButton;
+  composes: button;
   color: white;
   background-color: black;
   border: 1px solid white;
@@ -90,4 +90,19 @@
 
 .stopButton:hover {
   background-color: rgba(0, 0, 0, 0.87);
+}
+
+.clearButton {
+  composes: button;
+  color: black;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.clearButton:hover {
+  background-color: rgba(0, 0, 0, 0.13);
+}
+
+.clearButton:active {
+  background-color: rgba(0, 0, 0, 0.26);
 }
