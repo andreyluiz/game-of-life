@@ -5,7 +5,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const config = {
   entry: './src',
   output: {
-    path: path.resolve(__dirname, 'public/assets'),
+    path: path.resolve(__dirname, 'simulator/assets'),
     filename: 'app.bundle.js',
     publicPath: '/assets/'
   },
@@ -28,7 +28,7 @@ const config = {
     ]
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'public'),
+    contentBase: path.resolve(__dirname, 'simulator'),
     compress: true,
     port: 9000
   },
