@@ -7,6 +7,8 @@ import process from './processing';
 const ALIVE = 1;
 const DEAD = 0;
 
+const generateId = () => Math.random().toString(36).substr(2);
+
 const duck = createDuck('simulator', 'game-of-life');
 
 const SIMULATION_START = duck.defineType('SIMULATION_START');
@@ -16,6 +18,8 @@ const SIMULATION_STEP = duck.defineType('SIMULATION_STEP');
 const TOGGLE_CELL = duck.defineType('TOGGLE_CELL');
 const UPDATE_WORLD_SIZE = duck.defineType('UPDATE_WORLD_SIZE');
 const UPDATE_SPEED = duck.defineType('UPDATE_SPEED');
+const ADD_RULE = duck.defineType('ADD_RULE');
+const REMOVE_RULE = duck.defineType('REMOVE_RULE');
 
 let timer: number = 0;
 
@@ -49,6 +53,10 @@ export const updateWorldSize = duck.createAction(UPDATE_WORLD_SIZE);
 
 export const updateSpeed = duck.createAction(UPDATE_SPEED);
 
+export const addRule = duck.createAction(ADD_RULE);
+
+export const removeRule = duck.createAction(REMOVE_RULE);
+
 const initialState = {
   started: false,
   step: 0,
@@ -58,11 +66,13 @@ const initialState = {
   world: [],
   rules: [
     {
+      id: generateId(),
       is: ALIVE,
       has: [2, 3],
       becomes: ALIVE,
     },
     {
+      id: generateId(),
       is: DEAD,
       has: [3],
       becomes: ALIVE,
@@ -110,5 +120,21 @@ export const reducer = duck.createReducer({
   [UPDATE_SPEED]: (state, { payload }) => ({
     ...state,
     speed: payload,
+  }),
+  [ADD_RULE]: (state, { payload }) => ({
+    ...state,
+    rules: [
+      ...state.rules,
+      {
+        id: generateId(),
+        is: parseInt(payload.is, 10),
+        has: payload.has.filter(n => n).map(n => parseInt(n, 10)),
+        becomes: parseInt(payload.becomes, 10),
+      },
+    ],
+  }),
+  [REMOVE_RULE]: (state, { payload }) => ({
+    ...state,
+    rules: state.rules.filter(r => r.id !== payload),
   }),
 }, initialState);

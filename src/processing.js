@@ -1,14 +1,9 @@
 // @flow
-const World = require('./world');
-const isEmpty = require('lodash/isEmpty');
+import isEmpty from 'lodash/isEmpty';
+import World from './world';
+import type { $Rule } from './Rule';
 
-type Rule = {
-  is: number,
-  has: Array<number>,
-  becomes: number,
-};
-
-export default (input: Array<Object>, rules: Array<Rule>) => {
+export default (input: Array<Object>, rules: Array<$Rule>) => {
   const output = [];
 
   const world = new World(input);

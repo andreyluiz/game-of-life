@@ -1,0 +1,9 @@
+.rule {
+  display: flex;
+  padding: 4px;
+  margin: 4px;
+}
+
+.keyword {
+  font-weight: bold;
+}
