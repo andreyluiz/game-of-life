@@ -10,4 +10,18 @@ Time in this universe runs gradually by steps. And in each step, the cell can li
 1. If the cell is dead but have exactly 3 neighbors, it reborns.
 1. In any other condition the cell dies.
 
-Head to the [simulator](/simulator), customize your board and change the rules if you will. Let's see what you can create.
+# Simulator
+
+Head to [this page](/simulator).
+
+# Custom rules
+
+In this version of Game of Life you can customize the rules. Try different combinations and see what you can create.
+
+# Technology
+
+This application was created with React + Redux.
+
+# License
+
+[MIT](LICENSE.md).
