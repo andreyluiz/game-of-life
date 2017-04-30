@@ -141,6 +141,15 @@
 .Controls__clearButton___3XqQd:active {
   background-color: rgba(0, 0, 0, 0.26);
 }
+.Rule__rule___2M8cN {
+  display: flex;
+  padding: 4px;
+  margin: 4px;
+}
+
+.Rule__keyword___3y4zv {
+  font-weight: bold;
+}
 .Simulator__simulator___3VnM_ {
   margin: 12px;
 }
