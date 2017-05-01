@@ -12,7 +12,7 @@ Time in this universe runs gradually by steps. And in each step, the cell can li
 
 # Simulator
 
-Head to [this page](/simulator).
+Head to [this page](https://andreyluiz.github.io/game-of-life/simulator/).
 
 # Custom rules
 
@@ -24,4 +24,4 @@ This application was created with React + Redux.
 
 # License
 
-[MIT](LICENSE.md).
+[MIT](LICENSE).
