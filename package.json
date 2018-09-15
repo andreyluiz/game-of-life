@@ -19,8 +19,12 @@
   },
   "homepage": "https://github.com/andreyluiz/game-of-life#readme",
   "dependencies": {
+    "prop-types": "^15.6.2",
     "react": "^16.5.0",
-    "react-dom": "^16.5.0"
+    "react-dom": "^16.5.0",
+    "rebass": "^2.3.4",
+    "recompose": "^0.30.0",
+    "styled-components": "^3.4.6"
   },
   "devDependencies": {
     "eslint": "^5.6.0",
