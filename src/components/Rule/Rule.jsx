@@ -1,28 +1,15 @@
-// @flow
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Rule.css';
 
-export type $Rule = {
-  is: number,
-  has: Array<number>,
-  becomes: number,
+export const RulePropType = {
+  id: PropTypes.string.isRequired,
+  is: PropTypes.number.isRequired,
+  has: PropTypes.arrayOf(PropTypes.number).isRequired,
+  becomes: PropTypes.number.isRequired,
 };
 
-type Props = {
-  id: string,
-  is: number,
-  has: Array<number>,
-  becomes: number,
-  onDelete: Function,
-};
-
-export default ({
-  id,
-  is,
-  has,
-  becomes,
-  onDelete,
-}: Props) => (
+const Rule = ({ id, is, has, becomes, onDelete }) => (
   <div className={styles.rule}>
     <div className="description">
       <span>If cell is </span>
@@ -43,3 +30,13 @@ export default ({
     </div>
   </div>
 );
+
+Rule.propTypes = {
+  id: PropTypes.string.isRequired,
+  is: PropTypes.number.isRequired,
+  has: PropTypes.arrayOf(PropTypes.number).isRequired,
+  becomes: PropTypes.number.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};
+
+export default Rule;

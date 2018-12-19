@@ -1,30 +1,14 @@
-// @flow
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { startSimulation, stopSimulation, clearSimulation, toggleCell, updateWorldSize, updateSpeed } from './state';
+import PropTypes from 'prop-types';
 import styles from './Controls.css';
 
-class Control extends Component {
+class Controls extends Component {
   componentDidMount() {
     this.props.updateWorldSize({ rows: 20, columns: 20 });
   }
 
   componentWillUnmount() {
     this.props.stopSimulation();
-  }
-
-  props: {
-    updateWorldSize: Function,
-    stopSimulation: Function,
-    startSimulation: Function,
-    clearSimulation: Function,
-    updateWorldSize: Function,
-    updateSpeed: Function,
-    step: number,
-    rows: number,
-    columns: number,
-    speed: number,
-    started: boolean,
   }
 
   render() {
@@ -52,10 +36,7 @@ class Control extends Component {
             </button>
           </div>
           <div className={styles.row}>
-            <button
-              onClick={clearSimulation}
-              className={styles.clearButton}
-            >
+            <button onClick={clearSimulation} className={styles.clearButton}>
               Reset
             </button>
           </div>
@@ -68,12 +49,14 @@ class Control extends Component {
         <div className={styles.secondColumn}>
           <div className={styles.row}>
             <div className={styles.inputGroup}>
-              <label className={styles.inputLabel} htmlFor="rows">Rows:</label>
+              <label className={styles.inputLabel} htmlFor="rows">
+                Rows:
+              </label>
               <input
                 name="rows"
                 type="number"
                 value={rows}
-                onChange={(e) => {
+                onChange={e => {
                   updateWorldSize({
                     rows: parseInt(e.target.value, 10),
                     columns,
@@ -84,12 +67,14 @@ class Control extends Component {
           </div>
           <div className={styles.row}>
             <div className={styles.inputGroup}>
-              <label className={styles.inputLabel} htmlFor="columns">Columns:</label>
+              <label className={styles.inputLabel} htmlFor="columns">
+                Columns:
+              </label>
               <input
                 name="columns"
                 type="number"
                 value={columns}
-                onChange={(e) => {
+                onChange={e => {
                   updateWorldSize({
                     rows,
                     columns: parseInt(e.target.value, 10),
@@ -100,12 +85,14 @@ class Control extends Component {
           </div>
           <div className={styles.row}>
             <div className={styles.inputGroup}>
-              <label className={styles.inputLabel} htmlFor="speed">Speed:</label>
+              <label className={styles.inputLabel} htmlFor="speed">
+                Speed:
+              </label>
               <input
                 name="speed"
                 type="range"
                 value={speed}
-                onChange={(e) => {
+                onChange={e => {
                   updateSpeed(e.target.value);
                 }}
                 min="1"
@@ -119,11 +106,18 @@ class Control extends Component {
   }
 }
 
-const mapStateToProps = ({ simulation: { step, rows, columns, speed, started } }) => ({
-  step, rows, columns, speed, started,
-});
+Controls.propTypes = {
+  updateWorldSize: PropTypes.func.isRequired,
+  stopSimulation: PropTypes.func.isRequired,
+  startSimulation: PropTypes.func.isRequired,
+  clearSimulation: PropTypes.func.isRequired,
+  updateWorldSize: PropTypes.func.isRequired,
+  updateSpeed: PropTypes.func.isRequired,
+  step: PropTypes.number.isRequired,
+  rows: PropTypes.number.isRequired,
+  columns: PropTypes.number.isRequired,
+  speed: PropTypes.number.isRequired,
+  started: PropTypes.bool.isRequired,
+};
 
-export default connect(
-  mapStateToProps,
-  { startSimulation, stopSimulation, clearSimulation, toggleCell, updateWorldSize, updateSpeed },
-)(Control);
+export default Controls;
