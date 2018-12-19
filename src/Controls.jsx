@@ -1,5 +1,5 @@
-// @flow
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { startSimulation, stopSimulation, clearSimulation, toggleCell, updateWorldSize, updateSpeed } from './state';
 import styles from './Controls.css';
@@ -11,20 +11,6 @@ class Control extends Component {
 
   componentWillUnmount() {
     this.props.stopSimulation();
-  }
-
-  props: {
-    updateWorldSize: Function,
-    stopSimulation: Function,
-    startSimulation: Function,
-    clearSimulation: Function,
-    updateWorldSize: Function,
-    updateSpeed: Function,
-    step: number,
-    rows: number,
-    columns: number,
-    speed: number,
-    started: boolean,
   }
 
   render() {
@@ -117,6 +103,20 @@ class Control extends Component {
       </div>
     );
   }
+}
+
+Control.propTypes = {
+  updateWorldSize: PropTypes.func.isRequired,
+  stopSimulation: PropTypes.func.isRequired,
+  startSimulation: PropTypes.func.isRequired,
+  clearSimulation: PropTypes.func.isRequired,
+  updateWorldSize: PropTypes.func.isRequired,
+  updateSpeed: PropTypes.func.isRequired,
+  step: PropTypes.number.isRequired,
+  rows: PropTypes.number.isRequired,
+  columns: PropTypes.number.isRequired,
+  speed: PropTypes.number.isRequired,
+  started: PropTypes.bool.isRequired,
 }
 
 const mapStateToProps = ({ simulation: { step, rows, columns, speed, started } }) => ({

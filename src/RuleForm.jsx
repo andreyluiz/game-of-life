@@ -1,19 +1,9 @@
-// @flow
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styles from './Rule.css';
 
-export type $Rule = {
-  is: number,
-  has: Array<number>,
-  becomes: number,
-};
-
-type Props = {
-  onSubmit: Function,
-};
-
-export default class RuleForm extends Component {
-  constructor(props: Props) {
+class RuleForm extends Component {
+  constructor(props) {
     super(props);
     this.state = {
       is: 1,
@@ -21,9 +11,6 @@ export default class RuleForm extends Component {
       becomes: 1,
     };
   }
-
-  state: $Rule
-  props: Props
 
   render() {
     const { onSubmit } = this.props;
@@ -79,3 +66,9 @@ export default class RuleForm extends Component {
     );
   }
 }
+
+RuleForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};
+
+export default RuleForm;

@@ -1,4 +1,3 @@
-// @flow
 import { createDuck } from 'redux-duck';
 import map from 'lodash/map';
 import clone from 'lodash/clone';
@@ -21,7 +20,7 @@ const UPDATE_SPEED = duck.defineType('UPDATE_SPEED');
 const ADD_RULE = duck.defineType('ADD_RULE');
 const REMOVE_RULE = duck.defineType('REMOVE_RULE');
 
-let timer: number = 0;
+let timer = 0;
 
 const step = () =>
   (dispatch, getState) => {
@@ -32,7 +31,7 @@ const step = () =>
   };
 
 export const startSimulation = () =>
-  (dispatch: Function, getState: Function) => {
+  (dispatch, getState) => {
     const { speed } = getState().simulation;
     clearInterval(timer);
     timer = setInterval(() => dispatch(step()), (1000 - speed));

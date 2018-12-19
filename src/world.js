@@ -1,18 +1,14 @@
-// @flow
 class World {
-  source: Array<Object>
-  row: number
-  column: number
-  static ALIVE: number
-  static DEAD: number
+  static ALIVE = 1
+  static DEAD = 0
 
-  constructor(source: Array<Object>) {
+  constructor(source = []) {
     this.source = source;
     this.row = 0;
     this.column = 0;
   }
 
-  setCell(row: number, column: number) {
+  setCell(row, column) {
     this.row = row;
     this.column = column;
   }
@@ -95,7 +91,4 @@ class World {
   }
 }
 
-World.ALIVE = 1;
-World.DEAD = 0;
-
-module.exports = World;
+export default World;

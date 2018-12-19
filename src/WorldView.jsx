@@ -1,20 +1,14 @@
-// @flow
 /* eslint react/no-array-index-key: 0 */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toggleCell } from './state';
 import styles from './WorldView.css';
 
-// @flow weak
-type Props = {
-  world: Array<Array<Number>>,
-  toggleCell: Function,
-};
-
 const WorldView = ({
   world,
   toggleCell,
-}: Props) => (
+}) => (
   <div className={styles.world}>
     {world.map((row, rowIndex) => (
       <div key={rowIndex} className={styles.row}>
@@ -31,6 +25,11 @@ const WorldView = ({
     ))}
   </div>
 );
+
+WorldView.propTypes = {
+  world: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
+  toggleCell: PropTypes.func.isRequired,
+}
 
 const mapStateToProps = state => ({
   world: state.simulation.world,

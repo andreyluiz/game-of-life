@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import WorldView from './WorldView';
 import Controls from './Controls';

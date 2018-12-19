@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';

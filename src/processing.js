@@ -1,9 +1,7 @@
-// @flow
 import isEmpty from 'lodash/isEmpty';
 import World from './world';
-import type { $Rule } from './Rule';
 
-export default (input: Array<Object>, rules: Array<$Rule>) => {
+export default (input, rules) => {
   const output = [];
 
   const world = new World(input);

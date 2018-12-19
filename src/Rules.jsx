@@ -1,22 +1,15 @@
-// @flow
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Rule from './Rule';
+import Rule, { RulePropType } from './Rule';
 import RuleForm from './RuleForm';
 import { addRule, removeRule } from './state';
-import type { $Rule } from './Rule';
-
-type Props = {
-  rules: Array<$Rule>,
-  addRule: Function,
-  removeRule: Function,
-};
 
 const Rules = ({
   rules,
   addRule,
   removeRule,
-}: Props) => (
+}) => (
   <div className="rules">
     <div className="ruleset">
       {rules.map(rule => (
@@ -28,6 +21,12 @@ const Rules = ({
     </div>
   </div>
 );
+
+Rules.propTypes = {
+  rules: PropTypes.arrayOf(RulePropType).isRequired,
+  addRule: PropTypes.func.isRequired,
+  removeRule: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = state => ({
   rules: state.simulation.rules,
