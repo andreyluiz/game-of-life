@@ -8,8 +8,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "parcel public/index.html",
-    "build": "parcel build src/index.js --out-dir public",
+    "start": "parcel public/index.html --out-dir build",
+    "build": "parcel build src/index.js --out-dir simulator",
     "lint": "eslint src"
   },
   "devDependencies": {
@@ -46,15 +46,20 @@
     "env": {
       "browser": true
     },
-    "extends": ["airbnb", "prettier"],
-    "plugins": ["prettier"],
+    "extends": [
+      "airbnb",
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
     "rules": {
       "prettier/prettier": "error",
       "react/button-has-type": "off",
       "react/jsx-one-expression-per-line": "off",
       "react/destructuring-assignment": "off"
     }
-  },  
+  },
   "prettier": {
     "trailingComma": "es5",
     "tabWidth": 2,

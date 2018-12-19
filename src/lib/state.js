@@ -1,7 +1,7 @@
 import { createDuck } from 'redux-duck';
 import map from 'lodash/map';
 import clone from 'lodash/clone';
-import process from './processing';
+import { nextWorld, initialWorld, buildNewWorld } from './world';
 
 const ALIVE = 1;
 const DEAD = 0;
@@ -60,10 +60,10 @@ export const removeRule = duck.createAction(REMOVE_RULE);
 const initialState = {
   started: false,
   step: 0,
-  rows: 0,
-  columns: 0,
+  rows: initialWorld.rows,
+  columns: initialWorld.cols,
   speed: 500,
-  world: [],
+  world: buildNewWorld(initialWorld.rows, initialWorld.cols),
   rules: [
     {
       id: generateId(),
@@ -92,12 +92,12 @@ export const reducer = duck.createReducer(
     }),
     [SIMULATION_CLEAR]: state => ({
       ...state,
-      world: new Array(state.rows).fill(new Array(state.columns).fill(0)),
+      world: buildNewWorld(state.rows, state.columns),
     }),
     [SIMULATION_STEP]: state => ({
       ...state,
       step: state.step + 1,
-      world: process(state.world, state.rules),
+      world: nextWorld(state.world, state.rules),
     }),
     [TOGGLE_CELL]: (state, { payload: { row, column } }) => {
       const currentValue = state.world[row][column];
@@ -116,7 +116,7 @@ export const reducer = duck.createReducer(
       ...state,
       rows,
       columns,
-      world: new Array(rows).fill(new Array(columns).fill(0)),
+      world: buildNewWorld(rows, columns),
     }),
     [UPDATE_SPEED]: (state, { payload }) => ({
       ...state,

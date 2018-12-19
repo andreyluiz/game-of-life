@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import {
-  startSimulation,
-  stopSimulation,
-  clearSimulation,
-  toggleCell,
-  updateWorldSize,
-  updateSpeed,
-} from './state';
 import styles from './Controls.css';
 
-class Control extends Component {
+class Controls extends Component {
   componentDidMount() {
     this.props.updateWorldSize({ rows: 20, columns: 20 });
   }
@@ -115,7 +106,7 @@ class Control extends Component {
   }
 }
 
-Control.propTypes = {
+Controls.propTypes = {
   updateWorldSize: PropTypes.func.isRequired,
   stopSimulation: PropTypes.func.isRequired,
   startSimulation: PropTypes.func.isRequired,
@@ -129,24 +120,4 @@ Control.propTypes = {
   started: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = ({
-  simulation: { step, rows, columns, speed, started },
-}) => ({
-  step,
-  rows,
-  columns,
-  speed,
-  started,
-});
-
-export default connect(
-  mapStateToProps,
-  {
-    startSimulation,
-    stopSimulation,
-    clearSimulation,
-    toggleCell,
-    updateWorldSize,
-    updateSpeed,
-  }
-)(Control);
+export default Controls;

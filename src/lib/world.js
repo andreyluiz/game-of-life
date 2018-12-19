@@ -1,4 +1,4 @@
-class World {
+export class World {
   static ALIVE = 1;
 
   static DEAD = 0;
@@ -112,4 +112,47 @@ class World {
   }
 }
 
-export default World;
+const isEmpty = object => Object.keys(object).length === 0;
+
+export const nextWorld = (input, rules) => {
+  const output = [];
+
+  const world = new World(input);
+
+  for (let row = 0; row < input.length; row += 1) {
+    const rowArray = [];
+
+    for (let column = 0; column < input[row].length; column += 1) {
+      world.setCell(row, column);
+
+      const status = world.getCellStatus();
+      const neighbors = world.getNeighborsCount();
+      const matchedRule = rules.find(
+        rule => rule.is === status && rule.has.includes(neighbors)
+      );
+
+      if (!matchedRule || isEmpty(matchedRule)) {
+        rowArray.push(0);
+      } else {
+        rowArray.push(matchedRule.becomes);
+      }
+    }
+
+    output.push(rowArray);
+  }
+
+  return output;
+};
+
+export const initialWorld = {
+  cols: 20,
+  rows: 20,
+};
+
+export const buildNewWorld = (rows, cols) => {
+  const world = new Array(cols);
+  for (let i = 0; i < cols; i += 1) {
+    world[i] = new Array(rows).fill(0);
+  }
+  return world;
+};
