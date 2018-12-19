@@ -9,13 +9,7 @@ export const RulePropType = {
   becomes: PropTypes.number.isRequired,
 };
 
-const Rule = ({
-  id,
-  is,
-  has,
-  becomes,
-  onDelete,
-}) => (
+const Rule = ({ id, is, has, becomes, onDelete }) => (
   <div className={styles.rule}>
     <div className="description">
       <span>If cell is </span>
@@ -37,8 +31,12 @@ const Rule = ({
   </div>
 );
 
-Rule.propTypes = Object.assign({}, RulePropType, {
+Rule.propTypes = {
+  id: PropTypes.string.isRequired,
+  is: PropTypes.number.isRequired,
+  has: PropTypes.arrayOf(PropTypes.number).isRequired,
+  becomes: PropTypes.number.isRequired,
   onDelete: PropTypes.func.isRequired,
-});
+};
 
 export default Rule;

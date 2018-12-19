@@ -5,10 +5,7 @@ import { connect } from 'react-redux';
 import { toggleCell } from './state';
 import styles from './WorldView.css';
 
-const WorldView = ({
-  world,
-  toggleCell,
-}) => (
+const WorldView = ({ world, toggleCell }) => (
   <div className={styles.world}>
     {world.map((row, rowIndex) => (
       <div key={rowIndex} className={styles.row}>
@@ -16,9 +13,13 @@ const WorldView = ({
           <button
             key={colIndex}
             className={column === 1 ? styles.alive : styles.dead}
-            onClick={() => { toggleCell({ row: rowIndex, column: colIndex }); }}
+            onClick={() => {
+              toggleCell({ row: rowIndex, column: colIndex });
+            }}
           >
-            <div className={column === 1 ? styles.innerAlive : styles.innerDead} />
+            <div
+              className={column === 1 ? styles.innerAlive : styles.innerDead}
+            />
           </button>
         ))}
       </div>
@@ -29,10 +30,13 @@ const WorldView = ({
 WorldView.propTypes = {
   world: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
   toggleCell: PropTypes.func.isRequired,
-}
+};
 
 const mapStateToProps = state => ({
   world: state.simulation.world,
 });
 
-export default connect(mapStateToProps, { toggleCell })(WorldView);
+export default connect(
+  mapStateToProps,
+  { toggleCell }
+)(WorldView);

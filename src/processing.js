@@ -14,8 +14,9 @@ export default (input, rules) => {
 
       const status = world.getCellStatus();
       const neighbors = world.getNeighborsCount();
-      const matchedRule = rules.find(rule =>
-        (rule.is === status && rule.has.includes(neighbors)));
+      const matchedRule = rules.find(
+        rule => rule.is === status && rule.has.includes(neighbors)
+      );
 
       if (!matchedRule || isEmpty(matchedRule)) {
         rowArray.push(0);

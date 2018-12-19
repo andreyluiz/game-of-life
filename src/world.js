@@ -1,6 +1,7 @@
 class World {
-  static ALIVE = 1
-  static DEAD = 0
+  static ALIVE = 1;
+
+  static DEAD = 0;
 
   constructor(source = []) {
     this.source = source;
@@ -22,7 +23,10 @@ class World {
   }
 
   getTopLeft() {
-    if (this.source[this.row - 1] && this.source[this.row - 1][this.column - 1]) {
+    if (
+      this.source[this.row - 1] &&
+      this.source[this.row - 1][this.column - 1]
+    ) {
       return this.source[this.row - 1][this.column - 1];
     }
     return 0;
@@ -36,7 +40,10 @@ class World {
   }
 
   getTopRight() {
-    if (this.source[this.row - 1] && this.source[this.row - 1][this.column + 1]) {
+    if (
+      this.source[this.row - 1] &&
+      this.source[this.row - 1][this.column + 1]
+    ) {
       return this.source[this.row - 1][this.column + 1];
     }
     return 0;
@@ -50,7 +57,10 @@ class World {
   }
 
   getBottomRight() {
-    if (this.source[this.row + 1] && this.source[this.row + 1][this.column + 1]) {
+    if (
+      this.source[this.row + 1] &&
+      this.source[this.row + 1][this.column + 1]
+    ) {
       return this.source[this.row + 1][this.column + 1];
     }
     return 0;
@@ -64,7 +74,10 @@ class World {
   }
 
   getBottomLeft() {
-    if (this.source[this.row + 1] && this.source[this.row + 1][this.column - 1]) {
+    if (
+      this.source[this.row + 1] &&
+      this.source[this.row + 1][this.column - 1]
+    ) {
       return this.source[this.row + 1][this.column - 1];
     }
     return 0;
@@ -86,8 +99,16 @@ class World {
     const topRight = this.getTopRight();
     const bottomRight = this.getBottomRight();
     const bottomLeft = this.getBottomLeft();
-    return (top + right + bottom + left +
-            topLeft + topRight + bottomRight + bottomLeft);
+    return (
+      top +
+      right +
+      bottom +
+      left +
+      topLeft +
+      topRight +
+      bottomRight +
+      bottomLeft
+    );
   }
 }
 

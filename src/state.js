@@ -6,7 +6,10 @@ import process from './processing';
 const ALIVE = 1;
 const DEAD = 0;
 
-const generateId = () => Math.random().toString(36).substr(2);
+const generateId = () =>
+  Math.random()
+    .toString(36)
+    .substr(2);
 
 const duck = createDuck('simulator', 'game-of-life');
 
@@ -22,22 +25,20 @@ const REMOVE_RULE = duck.defineType('REMOVE_RULE');
 
 let timer = 0;
 
-const step = () =>
-  (dispatch, getState) => {
-    dispatch({ type: SIMULATION_STEP });
-    const { speed } = getState().simulation;
-    clearInterval(timer);
-    timer = setInterval(() => dispatch(step()), (1000 - speed));
-  };
+const step = () => (dispatch, getState) => {
+  dispatch({ type: SIMULATION_STEP });
+  const { speed } = getState().simulation;
+  clearInterval(timer);
+  timer = setInterval(() => dispatch(step()), 1000 - speed);
+};
 
-export const startSimulation = () =>
-  (dispatch, getState) => {
-    const { speed } = getState().simulation;
-    clearInterval(timer);
-    timer = setInterval(() => dispatch(step()), (1000 - speed));
-    dispatch({ type: SIMULATION_START });
-    dispatch(step());
-  };
+export const startSimulation = () => (dispatch, getState) => {
+  const { speed } = getState().simulation;
+  clearInterval(timer);
+  timer = setInterval(() => dispatch(step()), 1000 - speed);
+  dispatch({ type: SIMULATION_START });
+  dispatch(step());
+};
 
 export const stopSimulation = () => {
   clearInterval(timer);
@@ -79,61 +80,64 @@ const initialState = {
   ],
 };
 
-export const reducer = duck.createReducer({
-  [SIMULATION_START]: state => ({
-    ...state,
-    started: true,
-  }),
-  [SIMULATION_STOP]: state => ({
-    ...state,
-    started: false,
-  }),
-  [SIMULATION_CLEAR]: state => ({
-    ...state,
-    world: new Array(state.rows).fill(new Array(state.columns).fill(0)),
-  }),
-  [SIMULATION_STEP]: state => ({
-    ...state,
-    step: state.step + 1,
-    world: process(state.world, state.rules),
-  }),
-  [TOGGLE_CELL]: (state, { payload: { row, column } }) => {
-    const currentValue = state.world[row][column];
-    const newWorld = map(state.world, clone);
-    let newValue = 0;
-    if (currentValue === 0) {
-      newValue = 1;
-    }
-    newWorld[row].splice(column, 1, newValue);
-    return {
+export const reducer = duck.createReducer(
+  {
+    [SIMULATION_START]: state => ({
       ...state,
-      world: newWorld,
-    };
+      started: true,
+    }),
+    [SIMULATION_STOP]: state => ({
+      ...state,
+      started: false,
+    }),
+    [SIMULATION_CLEAR]: state => ({
+      ...state,
+      world: new Array(state.rows).fill(new Array(state.columns).fill(0)),
+    }),
+    [SIMULATION_STEP]: state => ({
+      ...state,
+      step: state.step + 1,
+      world: process(state.world, state.rules),
+    }),
+    [TOGGLE_CELL]: (state, { payload: { row, column } }) => {
+      const currentValue = state.world[row][column];
+      const newWorld = map(state.world, clone);
+      let newValue = 0;
+      if (currentValue === 0) {
+        newValue = 1;
+      }
+      newWorld[row].splice(column, 1, newValue);
+      return {
+        ...state,
+        world: newWorld,
+      };
+    },
+    [UPDATE_WORLD_SIZE]: (state, { payload: { rows, columns } }) => ({
+      ...state,
+      rows,
+      columns,
+      world: new Array(rows).fill(new Array(columns).fill(0)),
+    }),
+    [UPDATE_SPEED]: (state, { payload }) => ({
+      ...state,
+      speed: payload,
+    }),
+    [ADD_RULE]: (state, { payload }) => ({
+      ...state,
+      rules: [
+        ...state.rules,
+        {
+          id: generateId(),
+          is: parseInt(payload.is, 10),
+          has: payload.has.filter(n => n).map(n => parseInt(n, 10)),
+          becomes: parseInt(payload.becomes, 10),
+        },
+      ],
+    }),
+    [REMOVE_RULE]: (state, { payload }) => ({
+      ...state,
+      rules: state.rules.filter(r => r.id !== payload),
+    }),
   },
-  [UPDATE_WORLD_SIZE]: (state, { payload: { rows, columns } }) => ({
-    ...state,
-    rows,
-    columns,
-    world: new Array(rows).fill(new Array(columns).fill(0)),
-  }),
-  [UPDATE_SPEED]: (state, { payload }) => ({
-    ...state,
-    speed: payload,
-  }),
-  [ADD_RULE]: (state, { payload }) => ({
-    ...state,
-    rules: [
-      ...state.rules,
-      {
-        id: generateId(),
-        is: parseInt(payload.is, 10),
-        has: payload.has.filter(n => n).map(n => parseInt(n, 10)),
-        becomes: parseInt(payload.becomes, 10),
-      },
-    ],
-  }),
-  [REMOVE_RULE]: (state, { payload }) => ({
-    ...state,
-    rules: state.rules.filter(r => r.id !== payload),
-  }),
-}, initialState);
+  initialState
+);

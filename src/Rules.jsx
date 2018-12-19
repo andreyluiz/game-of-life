@@ -5,11 +5,7 @@ import Rule, { RulePropType } from './Rule';
 import RuleForm from './RuleForm';
 import { addRule, removeRule } from './state';
 
-const Rules = ({
-  rules,
-  addRule,
-  removeRule,
-}) => (
+const Rules = ({ rules, addRule, removeRule }) => (
   <div className="rules">
     <div className="ruleset">
       {rules.map(rule => (
@@ -32,4 +28,7 @@ const mapStateToProps = state => ({
   rules: state.simulation.rules,
 });
 
-export default connect(mapStateToProps, { removeRule, addRule })(Rules);
+export default connect(
+  mapStateToProps,
+  { removeRule, addRule }
+)(Rules);
