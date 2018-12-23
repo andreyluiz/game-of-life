@@ -25,6 +25,8 @@ const defaultRules = [
   },
 ];
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
 class Simulator extends React.Component {
   constructor(props) {
     super(props);
@@ -38,21 +40,13 @@ class Simulator extends React.Component {
       world: buildNewWorld(initialWorld.rows, initialWorld.cols),
       rules: defaultRules,
     };
-
-    this.intervalId = null;
   }
 
   start = () => {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
-    this.intervalId = setInterval(this.step, 1000 - this.state.speed);
-    this.setState({ started: true });
-    this.step();
+    this.setState({ started: true }, this.step);
   };
 
   stop = () => {
-    clearInterval(this.intervalId);
     this.setState({ started: false });
   };
 
@@ -61,11 +55,17 @@ class Simulator extends React.Component {
     this.setState({ world: buildNewWorld(rows, cols) });
   };
 
-  step = () => {
-    this.setState(({ step, world, rules }) => ({
-      step: step + 1,
-      world: nextWorld(world, rules),
-    }));
+  step = async () => {
+    if (this.state.started) {
+      requestAnimationFrame(() => {
+        this.setState(({ step, world, rules }) => ({
+          step: step + 1,
+          world: nextWorld(world, rules),
+        }));
+      });
+      await sleep(1000 - this.state.speed);
+      this.step();
+    }
   };
 
   updateWorldSize = (rows, cols) => {

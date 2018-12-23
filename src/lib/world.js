@@ -119,10 +119,10 @@ export const nextWorld = (input, rules) => {
 
   const world = new World(input);
 
-  for (let row = 0; row < input.length; row += 1) {
+  for (let row = 0, lenR = input.length; row < lenR; row += 1) {
     const rowArray = [];
 
-    for (let column = 0; column < input[row].length; column += 1) {
+    for (let column = 0, lenC = input[row].length; column < lenC; column += 1) {
       world.setCell(row, column);
 
       const status = world.getCellStatus();
