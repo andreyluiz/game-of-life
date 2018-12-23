@@ -2,14 +2,134 @@ import React from 'react';
 import World from '../World';
 import Controls from '../Controls';
 import Rules from '../Rules';
+import { nextWorld, initialWorld, buildNewWorld } from '../../lib/world';
 import styles from './Simulator.css';
 
-const Simulator = () => (
-  <div className={styles.simulator}>
-    <Controls />
-    <Rules />
-    <World />
-  </div>
-);
+const generateId = () =>
+  Math.random()
+    .toString(36)
+    .substr(2);
+
+const defaultRules = [
+  {
+    id: generateId(),
+    is: 1,
+    has: [2, 3],
+    becomes: 1,
+  },
+  {
+    id: generateId(),
+    is: 0,
+    has: [3],
+    becomes: 1,
+  },
+];
+
+class Simulator extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      started: false,
+      step: 0,
+      rows: initialWorld.rows,
+      cols: initialWorld.cols,
+      speed: 500,
+      world: buildNewWorld(initialWorld.rows, initialWorld.cols),
+      rules: defaultRules,
+    };
+
+    this.intervalId = null;
+  }
+
+  start = () => {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+    this.intervalId = setInterval(this.step, 1000 - this.state.speed);
+    this.setState({ started: true });
+    this.step();
+  };
+
+  stop = () => {
+    clearInterval(this.intervalId);
+    this.setState({ started: false });
+  };
+
+  clear = () => {
+    const { rows, cols } = this.state;
+    this.setState({ world: buildNewWorld(rows, cols) });
+  };
+
+  step = () => {
+    this.setState(({ step, world, rules }) => ({
+      step: step + 1,
+      world: nextWorld(world, rules),
+    }));
+  };
+
+  updateWorldSize = (rows, cols) => {
+    this.setState({ rows, cols, world: buildNewWorld(rows, cols) });
+  };
+
+  updateSpeed = speed => {
+    this.setState({ speed });
+  };
+
+  addRule = newRule => {
+    this.setState(({ rules }) => ({
+      rules: [
+        ...rules,
+        {
+          id: generateId(),
+          is: parseInt(newRule.is, 10),
+          has: newRule.has.filter(n => n).map(n => parseInt(n, 10)),
+          becomes: parseInt(newRule.becomes, 10),
+        },
+      ],
+    }));
+  };
+
+  removeRule = id => {
+    this.state.rules.findIndex(r => r.id === id);
+    this.setState(({ rules }) => ({
+      rules: rules.filter(r => r.id !== id),
+    }));
+  };
+
+  toggleCell = (row, col) => {
+    const { world } = this.state;
+    const currentValue = world[row][col];
+    const newValue = 1 - currentValue;
+    world[row].splice(col, 1, newValue);
+    this.setState({ world });
+  };
+
+  render() {
+    const { started, step, rows, cols, speed, rules, world } = this.state;
+    return (
+      <div className={styles.simulator}>
+        <Controls
+          onStart={this.start}
+          onStop={this.stop}
+          onClear={this.clear}
+          onUpdateWorldSize={this.updateWorldSize}
+          onUpdateSpeed={this.updateSpeed}
+          started={started}
+          step={step}
+          rows={rows}
+          cols={cols}
+          speed={speed}
+        />
+        <Rules
+          rules={rules}
+          onAddRule={this.addRule}
+          onRemoveRule={this.removeRule}
+        />
+        <World world={world} onToggleCell={this.toggleCell} />
+      </div>
+    );
+  }
+}
 
 export default Simulator;
