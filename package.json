@@ -15,6 +15,8 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.2.1",
+    "@babel/plugin-transform-async-to-generator": "^7.2.0",
+    "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
@@ -28,7 +30,6 @@
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.11.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "parcel": "^1.11.0",
     "prettier": "^1.15.3",
     "style-loader": "^0.23.1",
     "webpack": "^4.28.2",
@@ -36,14 +37,9 @@
     "webpack-dev-server": "^3.1.10"
   },
   "dependencies": {
-    "lodash": "^4.17.4",
     "prop-types": "^15.6.2",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4",
-    "react-redux": "^5.0.4",
-    "redux": "^3.6.0",
-    "redux-duck": "^1.0.2",
-    "redux-thunk": "^2.2.0"
+    "react-dom": "^15.5.4"
   },
   "babel": {
     "presets": [
@@ -51,7 +47,8 @@
       "@babel/preset-react"
     ],
     "plugins": [
-      "@babel/plugin-proposal-class-properties"
+      "@babel/plugin-proposal-class-properties",
+      "@babel/plugin-transform-async-to-generator"
     ]
   },
   "eslintConfig": {

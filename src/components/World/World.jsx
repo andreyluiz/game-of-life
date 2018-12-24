@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './World.css';
 
-const World = ({ world, toggleCell }) => (
+const World = ({ world, onToggleCell }) => (
   <div className={styles.world}>
     {world.map((row, rowIndex) => (
       <div key={rowIndex} className={styles.row}>
@@ -11,9 +11,7 @@ const World = ({ world, toggleCell }) => (
           <button
             key={colIndex}
             className={column === 1 ? styles.alive : styles.dead}
-            onClick={() => {
-              toggleCell({ row: rowIndex, column: colIndex });
-            }}
+            onClick={() => onToggleCell(rowIndex, colIndex)}
           >
             <div
               className={column === 1 ? styles.innerAlive : styles.innerDead}
@@ -27,7 +25,7 @@ const World = ({ world, toggleCell }) => (
 
 World.propTypes = {
   world: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired,
-  toggleCell: PropTypes.func.isRequired,
+  onToggleCell: PropTypes.func.isRequired,
 };
 
 export default World;
