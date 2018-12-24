@@ -1,9 +1,9 @@
 import React from 'react';
+import { Flex, Box } from 'rebass';
 import World from '../World';
 import Controls from '../Controls';
 import Rules from '../Rules';
 import { nextWorld, initialWorld, buildNewWorld } from '../../lib/world';
-import styles from './Simulator.css';
 
 const generateId = () =>
   Math.random()
@@ -91,7 +91,6 @@ class Simulator extends React.Component {
   };
 
   removeRule = id => {
-    this.state.rules.findIndex(r => r.id === id);
     this.setState(({ rules }) => ({
       rules: rules.filter(r => r.id !== id),
     }));
@@ -108,26 +107,34 @@ class Simulator extends React.Component {
   render() {
     const { started, step, rows, cols, speed, rules, world } = this.state;
     return (
-      <div className={styles.simulator}>
-        <Controls
-          onStart={this.start}
-          onStop={this.stop}
-          onClear={this.clear}
-          onUpdateWorldSize={this.updateWorldSize}
-          onUpdateSpeed={this.updateSpeed}
-          started={started}
-          step={step}
-          rows={rows}
-          cols={cols}
-          speed={speed}
-        />
-        <Rules
-          rules={rules}
-          onAddRule={this.addRule}
-          onRemoveRule={this.removeRule}
-        />
-        <World world={world} onToggleCell={this.toggleCell} />
-      </div>
+      <Flex m={12}>
+        <Box width={200} mr={12}>
+          <Controls
+            onStart={this.start}
+            onStop={this.stop}
+            onClear={this.clear}
+            onUpdateWorldSize={this.updateWorldSize}
+            onUpdateSpeed={this.updateSpeed}
+            started={started}
+            step={step}
+            rows={rows}
+            cols={cols}
+            speed={speed}
+          />
+        </Box>
+        <Box>
+          <Box mb={12}>
+            <Rules
+              rules={rules}
+              onAddRule={this.addRule}
+              onRemoveRule={this.removeRule}
+            />
+          </Box>
+          <Box>
+            <World world={world} onToggleCell={this.toggleCell} />
+          </Box>
+        </Box>
+      </Flex>
     );
   }
 }

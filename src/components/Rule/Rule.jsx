@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './Rule.css';
+
+const labels = ['Dead', 'Alive'];
 
 export const RulePropType = {
   id: PropTypes.string.isRequired,
@@ -10,16 +11,11 @@ export const RulePropType = {
 };
 
 const Rule = ({ id, is, has, becomes, onDelete }) => (
-  <div className={styles.rule}>
-    <div className="description">
-      <span>If cell is </span>
-      <span className={styles.keyword}>{is === 1 ? 'Alive' : 'Dead'}</span>
-      <span> and has </span>
-      <span className={styles.keyword}>{has.join(' or ')}</span>
-      <span> alive neighbors, then it becomes </span>
-      <span className={styles.keyword}>{becomes === 1 ? 'Alive' : 'Dead'}</span>
-    </div>
-    <div className="delete">
+  <tr>
+    <td>{labels[is]}</td>
+    <td>{has.join(', ')}</td>
+    <td>{labels[becomes]}</td>
+    <td>
       <button
         onClick={() => {
           onDelete(id);
@@ -27,8 +23,8 @@ const Rule = ({ id, is, has, becomes, onDelete }) => (
       >
         x
       </button>
-    </div>
-  </div>
+    </td>
+  </tr>
 );
 
 Rule.propTypes = {

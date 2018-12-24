@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styles from './Rule.css';
 
 class RuleForm extends Component {
   constructor(props) {
@@ -16,9 +15,8 @@ class RuleForm extends Component {
     const { onSubmit } = this.props;
     const { is, has, becomes } = this.state;
     return (
-      <div className={styles.rule}>
-        <div className="description">
-          <span>If cell is </span>
+      <tr>
+        <td>
           <select
             name="is"
             value={is}
@@ -29,7 +27,8 @@ class RuleForm extends Component {
             <option value={1}>Alive</option>
             <option value={0}>Dead</option>
           </select>
-          <span> and has </span>
+        </td>
+        <td>
           <input
             name="has"
             type="text"
@@ -38,7 +37,8 @@ class RuleForm extends Component {
               this.setState({ has: target.value.split(',') });
             }}
           />
-          <span> alive neighbors, then it becomes </span>
+        </td>
+        <td>
           <select
             name="becomes"
             value={becomes}
@@ -49,8 +49,8 @@ class RuleForm extends Component {
             <option value={1}>Alive</option>
             <option value={0}>Dead</option>
           </select>
-        </div>
-        <div className="add">
+        </td>
+        <td>
           <button
             onClick={() => {
               onSubmit(this.state);
@@ -61,8 +61,8 @@ class RuleForm extends Component {
           >
             Add
           </button>
-        </div>
-      </div>
+        </td>
+      </tr>
     );
   }
 }
