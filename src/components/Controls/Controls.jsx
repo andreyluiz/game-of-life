@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button, Box, Text } from 'rebass';
 import styled from 'styled-components';
+import { template } from '../../lib/world';
 
 const NumberInput = styled.input`
   font-size: 14px;
@@ -113,6 +114,7 @@ const Controls = ({
   onClear,
   onUpdateWorldSize,
   onUpdateSpeed,
+  onApplyTemplate,
   step,
   rows,
   cols,
@@ -163,7 +165,7 @@ const Controls = ({
     </Box>
     <Box>
       <Text mb="4px" fontSize={14}>
-        Speed
+        Speed {speed}
       </Text>
       <RangeInput
         name="speed"
@@ -175,6 +177,9 @@ const Controls = ({
         min="1"
         max="1001"
       />
+    </Box>
+    <Box>
+      <button onClick={() => onApplyTemplate(template)}>Template</button>
     </Box>
   </Card>
 );

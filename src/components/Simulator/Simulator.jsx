@@ -104,6 +104,10 @@ class Simulator extends React.Component {
     this.setState({ world });
   };
 
+  applyTemplate = world => {
+    this.setState({ world });
+  };
+
   render() {
     const { started, step, rows, cols, speed, rules, world } = this.state;
     return (
@@ -115,6 +119,7 @@ class Simulator extends React.Component {
             onClear={this.clear}
             onUpdateWorldSize={this.updateWorldSize}
             onUpdateSpeed={this.updateSpeed}
+            onApplyTemplate={this.applyTemplate}
             started={started}
             step={step}
             rows={rows}
