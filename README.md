@@ -1,6 +1,6 @@
 # DEPRECATION WARNING
 
-This version of game-of-life is deprecated. Current maintenance is being made on the project (andreyluiz/game-of-life-on-svelte)[https://github.com/andreyluiz/game-of-life-on-svelte]. That version is much faster and has new features.
+This version of game-of-life is deprecated. Current maintenance is being made on the project [andreyluiz/game-of-life-on-svelte](https://github.com/andreyluiz/game-of-life-on-svelte). That version is much faster and has new features.
 
 # John Conway's Game of Life
 
