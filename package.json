@@ -1,6 +1,6 @@
 {
   "name": "game-of-life",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Conway's Game of Life made with React.",
   "main": "index.js",
   "repository": "git@github.com:andreyluiz/game-of-life.git",
